@@ -1,5 +1,6 @@
 <?php
 
+
 class Burger
 {
     protected $db;
@@ -13,12 +14,36 @@ class Burger
         $sql = 'INSERT INTO mrb_burgers(created, event_id) VALUES(:created, :event_id)';
 
         try {
+            $event = new Event($this->db);
+            $currentEvent = $event->getCurrentEvent('2013-06-07');
+            $eventID = $currentEvent["id"];
+            if(empty($eventID)) {
+                $eventID = "666";
+            }
+
             $stmt = $this->db->prepare($sql);
             $stmt->bindValue(':created', date('Y-d-m H:i:s'));
-            $stmt->bindValue(':event_id', $data['event_id']);
+            $stmt->bindValue(':event_id', intval($eventID));
             $stmt->execute();
 
-            return $this->db->lastInsertId();
+            $burgerID = $this->db->lastInsertId();
+
+            $ingredients = json_decode($data["ingredients"], true);
+            $stripped = $ingredients["ingredients"];
+            foreach($stripped as $ingredient) {
+                $creation = new Creation($this->db);
+                // $url = 'http://192.168.2.9/Devine/_MAMP_JAAR2/_SEM2/MAIV/mrburger/api' . '/creations';
+                // $data = array('hamburger_id' => $burgerID, 'user_id' => intval($ingredient["user_id"]), 'ingredient_id' => $ingredient["ingredient_id"]);
+                
+                // $options = array('http' => array('method' => 'POST', 'content' => http_build_query($data)));
+                // $context = stream_context_create($options);
+                // $result = file_get_contents($url, false, $context);
+                $post = array('hamburger_id' => $burgerID, 'user_id' => intval($ingredient["user_id"]), 'ingredient_id' => intval($ingredient["ingredient_id"]));
+                $creation->add($post);
+            }
+            
+            return intval($burgerID);
+
         } catch(PDOException $e) {}
 
         return false;

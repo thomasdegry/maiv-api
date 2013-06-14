@@ -34,5 +34,21 @@ class Event
 
         return false;
     }
+
+    public function getCurrentEvent($date) {
+        $sql = 'SELECT * FROM mrb_events WHERE start < :current_date AND end > :current_date';
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindValue(':current_date', $date);
+            $stmt->bindValue(':current_date', $date);
+            $stmt->execute();
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+
+        return false;
+    }
     
 }

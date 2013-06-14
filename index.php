@@ -1,6 +1,8 @@
 <?php
 
 require_once 'bootstrap.php';
+error_reporting(E_ALL);
+ini_set('error_reporting', "1");
 
 // Set up router
 $router = new \Bramus\Router\Router();
@@ -59,6 +61,14 @@ $router->get('/events/(\d+)', function($id) use ($db) {
     $res->finish();
 });
 
+$router->get('/events/now', function() use ($db) {
+    $res = new JSONResponse();
+    $event = new Event($db);
+
+    $res->setData($event->getCurrentEvent());
+    $res->finish();
+});
+
 $router->get('/burgers', function() use($db){
     $res = new JSONResponse();
     $burger = new Burger($db);
@@ -89,6 +99,10 @@ $router->post('/creations', function() use ($db) {
 
     $res->setData($creation->add($_POST));
     $res->finish();
+});
+
+$router->post('/creations/pay', function() use ($db) {
+
 });
 
 $router->get('/burgers/(\d+)', function($id) use ($db){

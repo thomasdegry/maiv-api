@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Bramus' => array($vendorDir . '/bramus/router/src'),
+    'Bramus' => $vendorDir . '/bramus/router/src',
 );

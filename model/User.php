@@ -23,12 +23,14 @@ class User
     }
 
     public function add ($data) {
-        $sql = 'INSERT INTO mrb_users (id, name) VALUES (:id, :name)';
+        $sql = 'INSERT INTO mrb_users (id, name, gender, device_token) VALUES (:id, :name, :gender, :device_token)';
 
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->bindValue(':id', $data['id']);
             $stmt->bindValue(':name', $data['name']);
+            $stmt->bindValue(':gender', $data['gender']);
+            $stmt->bindValue(':device_token', $data['device_token']);
             $stmt->execute();
             return true;
         } catch(PDOException $e) {}

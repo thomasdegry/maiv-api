@@ -19,3 +19,4 @@ $config['db']['host'] = 'localhost';
 $config['db']['user'] = 'root';
 $config['db']['password'] = 'root';
 $config['db']['dbname'] = 'maiv_mrburger';
+$config['url'] = 'http://192.168.2.9/Devine/_MAMP_JAAR2/_SEM2/MAIV/mrburger/api';
