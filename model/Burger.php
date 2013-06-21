@@ -22,7 +22,7 @@ class Burger
             }
 
             $stmt = $this->db->prepare($sql);
-            $stmt->bindValue(':created', date('Y-d-m H:i:s'));
+            $stmt->bindValue(':created', date('Y-m-d H:i:s'));
             $stmt->bindValue(':event_id', intval($eventID));
             $stmt->execute();
 
@@ -33,12 +33,12 @@ class Burger
             foreach($stripped as $ingredient) {
                 $creation = new Creation($this->db);
                 // $url = 'http://192.168.2.9/Devine/_MAMP_JAAR2/_SEM2/MAIV/mrburger/api' . '/creations';
-                // $data = array('hamburger_id' => $burgerID, 'user_id' => intval($ingredient["user_id"]), 'ingredient_id' => $ingredient["ingredient_id"]);
+                // $data = array('burger_id' => $burgerID, 'user_id' => intval($ingredient["user_id"]), 'ingredient_id' => $ingredient["ingredient_id"]);
                 
                 // $options = array('http' => array('method' => 'POST', 'content' => http_build_query($data)));
                 // $context = stream_context_create($options);
                 // $result = file_get_contents($url, false, $context);
-                $post = array('hamburger_id' => $burgerID, 'user_id' => intval($ingredient["user_id"]), 'ingredient_id' => intval($ingredient["ingredient_id"]));
+                $post = array('burger_id' => $burgerID, 'user_id' => intval($ingredient["user_id"]), 'ingredient_id' => intval($ingredient["ingredient_id"]));
                 $creation->add($post);
             }
             
@@ -94,10 +94,10 @@ class Burger
                 INNER JOIN mrb_users
                     ON mrb_creations.user_id = mrb_users.id
                 INNER JOIN mrb_burgers
-                    ON mrb_burgers.id = mrb_creations.hamburger_id
+                    ON mrb_burgers.id = mrb_creations.burger_id
                 INNER JOIN mrb_events
                     ON mrb_burgers.event_id = mrb_events.id
-                WHERE mrb_creations.hamburger_id = :id';  
+                WHERE mrb_creations.burger_id = :id';  
 
         try {
             $stmt = $this->db->prepare($sql);
@@ -109,7 +109,7 @@ class Burger
             // die(var_dump($raw));
 
             $clean = array();
-            $clean["id"] = $raw[0]["hamburger_id"];
+            $clean["id"] = $raw[0]["burger_id"];
             $clean["created"] = $raw[0]["created"];
             $clean["event_id"] = $raw[0]["event_id"];
             $clean["ingredients"] = array();

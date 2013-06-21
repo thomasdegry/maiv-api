@@ -25,6 +25,14 @@ if ($db) {
 
 // Example code
 
+$router->get('/users/unusedburgers/(\d+)', function($limit) use($db) {
+    $res = new JSONResponse();
+    $user = new User($db);
+
+    $res->setData($user->getUsersWithFreeBurgers($limit));
+    $res->finish();
+});
+
 $router->get('/users/(\d+)', function($id) use ($db) {
     $res = new JSONResponse();
     $user = new User($db);
@@ -32,6 +40,14 @@ $router->get('/users/(\d+)', function($id) use ($db) {
     $res->setData($user->get($id));
     $res->finish();
 }); 
+
+$router->get('/users/(\d+)/hasfree', function($id) use ($db) {
+    $res = new JSONResponse();
+    $user = new User($db);
+
+    $res->setData($user->hasFree($id));
+    $res->finish();
+});
 
 $router->post('/users', function () use ($db) {
     $res = new JSONResponse();
@@ -101,8 +117,12 @@ $router->post('/creations', function() use ($db) {
     $res->finish();
 });
 
-$router->post('/creations/pay', function() use ($db) {
+$router->get('/creations/pay/(\d+)/(\d+)', function($user_id, $burger_id) use ($db) {
+    $res = new JSONResponse();
+    $creation = new Creation($db);
 
+    $res->setData($creation->pay($user_id, $burger_id));
+    $res->finish();
 });
 
 $router->get('/burgers/(\d+)', function($id) use ($db){
@@ -112,11 +132,5 @@ $router->get('/burgers/(\d+)', function($id) use ($db){
     $res->setData($burger->get($id));
     $res->finish();
 });
-
-// $router->get('/events/(\d+)', function ($eventID) use ($db) {
-//     Parameters with a subset of RegEx
-//     Check out what to use:
-//     https://www.cs.washington.edu/education/courses/190m/12sp/cheat-sheets/php-regex-cheat-sheet.pdf
-// });
 
 $router->run();
