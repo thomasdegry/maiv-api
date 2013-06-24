@@ -34,8 +34,7 @@ class Burger
                 $creation = new Creation($this->db);
                 // $url = 'http://192.168.2.9/Devine/_MAMP_JAAR2/_SEM2/MAIV/mrburger/api' . '/creations';
                 // $data = array('burger_id' => $burgerID, 'user_id' => intval($ingredient["user_id"]), 'ingredient_id' => $ingredient["ingredient_id"]);
-                
-                // $options = array('http' => array('method' => 'POST', 'content' => http_build_query($data)));
+                    // $options = array('http' => array('method' => 'POST', 'content' => http_build_query($data)));
                 // $context = stream_context_create($options);
                 // $result = file_get_contents($url, false, $context);
                 $post = array('burger_id' => $burgerID, 'user_id' => intval($ingredient["user_id"]), 'ingredient_id' => intval($ingredient["ingredient_id"]));

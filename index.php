@@ -39,7 +39,7 @@ $router->get('/users/(\d+)', function($id) use ($db) {
 
     $res->setData($user->get($id));
     $res->finish();
-}); 
+});
 
 $router->get('/users/(\d+)/hasfree', function($id) use ($db) {
     $res = new JSONResponse();
@@ -138,6 +138,14 @@ $router->post('/rate', function() use ($db) {
     $rating = new Rating($db);
 
     $res->setData($rating->rate($_POST));
+    $res->finish();
+});
+
+$router->get('/getRatings/(\d+)', function($id) use ($db) {
+    $res = new JSONResponse();
+    $rating = new Rating($db);
+
+    $res->setData($rating->getRatings($id));
     $res->finish();
 });
 
