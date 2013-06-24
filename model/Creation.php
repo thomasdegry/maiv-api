@@ -66,6 +66,7 @@ class Creation
                         )
                 ));
 
+                ob_start();
 
                 $rest = curl_init();
                 curl_setopt($rest,CURLOPT_URL,$url);
@@ -78,6 +79,8 @@ class Creation
                         "Content-Type: application/json"));
 
                 $response = curl_exec($rest);
+
+                ob_end_clean();
             }
 
             $stmt = $this->db->prepare($sql);

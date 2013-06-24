@@ -133,4 +133,12 @@ $router->get('/burgers/(\d+)', function($id) use ($db){
     $res->finish();
 });
 
+$router->post('/rate', function() use ($db) {
+    $res = new JSONResponse();
+    $rating = new Rating($db);
+
+    $res->setData($rating->rate($_POST));
+    $res->finish();
+});
+
 $router->run();

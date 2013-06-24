@@ -12,6 +12,7 @@ require_once 'model/User.php';
 require_once 'model/Event.php';
 require_once 'model/Burger.php';
 require_once 'model/Creation.php';
+require_once 'model/Rating.php';
 
 $config = array();
 $config['db']['driver'] = 'mysql';
